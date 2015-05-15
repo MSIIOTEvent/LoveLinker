@@ -5,8 +5,9 @@ const int buttonPin = 2;     // the number of the pushbutton pin
 // variables will change:
 int buttonState = 0;         // variable for reading the pushbutton status
 int buttonPreState = 0;
-
+boolean startCount = false;
 int clickTimes = 0;
+int pressTime = 0;
 int count = 0;
 int timer = 0;
 
@@ -27,10 +28,26 @@ int BtnEvent() {
 
   // check if the pushbutton is pressed.
   // if it is, the buttonState is HIGH:
-  if (buttonState == LOW && buttonPreState == HIGH) {
-    // turn LED on:
-    clickTimes++;
+  if (buttonState == HIGH && buttonPreState == LOW) {
+    if (startCount) {
+      clickTimes++;
+      pressTime = 0;
+    }
+  } else if (buttonState ==LOW && buttonPreState == HIGH) {
+    if (startCount == false) {
+      Serial.print("Start");
+      startCount = true;
+      timer = 0;
+      clickTimes = 0;
+      pressTime = 0;
+    }
+  } else if (buttonState == LOW && buttonPreState == LOW && startCount) {
+    pressTime++;
+    if (pressTime > (checkTime * 2 /3) )
+      clickTimes += 100;
+  } else {
   }
+
 
   if (timer == checkTime) {
 
@@ -47,14 +64,16 @@ int BtnEvent() {
         event = 3;
         break;
       default:
-        //nothing
+        if (clickTimes > 100)
+          event = 100; //long press
         break;
     }
+    startCount = false;
     timer = 0;
-    clickTimes = 0;
   }
 
-  timer++;
+  if (startCount)
+    timer++;
   return event;
   //delay(1);
 }

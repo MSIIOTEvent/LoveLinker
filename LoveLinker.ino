@@ -29,13 +29,22 @@ void setup() {
 
 //  Where the Magic Happens
 void loop() {
+  handleBtnEvent();
+  //serialOutput() ;
+  delay(DELAY_TIME);                             //  take a break
+}
+
+void handleBtnEvent() {
   int btnEvent = BtnEvent();
   switch (btnEvent) {
     case 2:
       break;
     case 3:
-    //led action
+      //led action
       startPairPAN();
+      break;
+      case 100:
+      //long press
       break;
     default:
       break;
@@ -45,13 +54,8 @@ void loop() {
     Serial.print("BTN Event: ");
     Serial.println(btnEvent);
   }
-  //serialOutput() ;
 
-
-  delay(DELAY_TIME);                             //  take a break
 }
-
-
 
 
 
