@@ -1,5 +1,6 @@
 
 #include <TimerOne.h>
+float temprature;
 
 void startAnalyse(){
   Timer1.initialize(2000);
@@ -8,6 +9,7 @@ void startAnalyse(){
 
 void Analyse(){
 HeartBeatAlg();
+temprature = measureObjectTemp();
 //Temperature
 //analyse
 //send

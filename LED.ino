@@ -1,34 +1,65 @@
-//  Variables
+int redPin = 6; 	// R petal on RGB LED module connected to digital pin 11
+int greenPin = 9; 	// G petal on RGB LED module connected to digital pin 9
+int bluePin = 10; 	// B petal on RGB LED module connected to digital pin 10
+boolean isBlink = false;
+int blinkUpTime = 0; //ms
+int blinkDownTime = 0; //ms
+int curColor = 0;
+int blinkTimer = 0;
+void setupLED()
+{
+  //  pinMode(ledPin, OUTPUT); 	// sets the ledPin to be an output
+  pinMode(redPin, OUTPUT); 	// sets the redPin to be an output
+  pinMode(greenPin, OUTPUT); 	// sets the greenPin to be an output
+  pinMode(bluePin, OUTPUT); 	// sets the bluePin to be an output
 
-int blinkPin = 13;                // pin to blink led at each beat
-int fadePin = 5;                  // pin to do fancy classy fading blink at each beat
-int fadeRate = 0;                 // used to fade LED on with PWM on fadePin
-
-void setupLED(){
-  pinMode(blinkPin,OUTPUT);         // pin that will blink to your heartbeat!
-  pinMode(fadePin,OUTPUT);          // pin that will fade to your heartbeat!
+  setLED(DARK);
 }
 
-void hbBlink(){
-  if (QS == true){     //  A Heartbeat Was Found
-                       // BPM and IBI have been Determined
-                       // Quantified Self "QS" true when arduino finds a heartbeat
-        digitalWrite(blinkPin,HIGH);     // Blink LED, we got a beat. 
-        fadeRate = 255;         // Makes the LED Fade Effect Happen
-                                // Set 'fadeRate' Variable to 255 to fade LED with pulse
-        serialOutputWhenBeatHappens();   // A Beat Happened, Output that to serial.     
-        QS = false;                      // reset the Quantified Self flag for next time    
-       } 
-      else { 
-
-      digitalWrite(blinkPin,LOW);            // There is not beat, turn off pin 13 LED
-      }
-     
-   ledFadeToBeat();                      // Makes the LED Fade Effect Happen 
+void setBlink(int upTime, int downTime, boolean state) {
+  blinkUpTime = upTime ;
+  blinkDownTime = downTime ;
+  isBlink = state;
 }
 
-void ledFadeToBeat(){
-    fadeRate -= 15;                         //  set LED fade value
-    fadeRate = constrain(fadeRate,0,255);   //  keep LED fade value from going into negative numbers!
-    analogWrite(fadePin,fadeRate);          //  fade LED
+void updateLED() {
+  if (!isBlink)
+    return;
+  if (blinkTimer >= blinkUpTime + blinkDownTime) {
+    blinkTimer = 0;
+  } else if (blinkTimer == blinkUpTime) {
+    setColor(255, 255, 255);
   }
+ 
+  if (blinkTimer ==0){
+    setLED(curColor);
+  }
+  blinkTimer += DELAY_TIME;
+
+}
+
+void setLED(int color) {
+  curColor = color;
+  switch (color) {
+    case DARK:
+      setColor(255, 255, 255);
+      break;
+    case GREEN:
+      setColor(255, 0, 255);
+      break;
+    case YELLOW:
+      setColor(0, 0, 255);
+      break;
+    case RED:
+      setColor(0, 255, 255);
+      break;
+  }
+
+}
+
+void setColor (unsigned char red, unsigned char green, unsigned char blue)     // the color generating function
+{
+  analogWrite(redPin, red);
+  analogWrite(bluePin, blue);
+  analogWrite(greenPin, green);
+}

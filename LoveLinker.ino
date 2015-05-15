@@ -17,18 +17,26 @@ volatile boolean Pulse = false;     // "True" when User's live heartbeat is dete
 volatile boolean QS = false;        // becomes true when Arduoino finds a beat.
 const int DELAY_TIME = 20; //ms
 const int BTN_CHECK_TIME = 2000; //ms
+
+const int DARK = 0;
+const int GREEN = 1;
+const int YELLOW = 2;
+const int RED = 3;
+
 // Regards Serial OutPut  -- Set This Up to your needs
 static boolean serialVisual = true;   // Set to 'false' by Default.  Re-set to 'true' to see Arduino Serial Monitor ASCII Visual Pulse
 
 void setup() {
   Serial.begin(115200);             // we agree to talk fast!
   setupBtn(BTN_CHECK_TIME / DELAY_TIME);
+  setupLED() ;
   startAnalyse();
 }
 
 
 //  Where the Magic Happens
 void loop() {
+  updateLED();
   handleBtnEvent();
   //serialOutput() ;
   delay(DELAY_TIME);                             //  take a break
@@ -43,7 +51,7 @@ void handleBtnEvent() {
       //led action
       startPairPAN();
       break;
-      case 100:
+    case 100:
       //long press
       break;
     default:
