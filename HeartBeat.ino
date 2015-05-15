@@ -1,4 +1,4 @@
-int pulsePin = 0;                 // Pulse Sensor purple wire connected to analog pin 0
+int pulsePin = 3;                 // Pulse Sensor purple wire connected to analog pin 0
 
 void HeartBeatSetup(){
 
