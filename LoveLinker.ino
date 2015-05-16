@@ -22,6 +22,7 @@ const int DARK = 0;
 const int GREEN = 1;
 const int YELLOW = 2;
 const int RED = 3;
+typedef enum EMOTION{NORMAL, LOWEMO,HIGHEMO};
 
 // Regards Serial OutPut  -- Set This Up to your needs
 static boolean serialVisual = true;   // Set to 'false' by Default.  Re-set to 'true' to see Arduino Serial Monitor ASCII Visual Pulse
@@ -40,14 +41,16 @@ void loop() {
   updateLED();
   updateVibration();
   handleBtnEvent();
-  //serialOutput() ;
-  delay(DELAY_TIME);                             //  take a break
+  TaskDispatcher();
+  serialOutput() ;
+  delay(DELAY_TIME);                   //  take a break
 }
 
 void handleBtnEvent() {
   int btnEvent = BtnEvent();
   switch (btnEvent) {
     case 2:
+    setVibration(0, 0, false);
       break;
     case 3:
       //led action
@@ -55,6 +58,7 @@ void handleBtnEvent() {
       break;
     case 100:
       //long press
+      setVibration(100, 5000, true);
       break;
     default:
       break;
