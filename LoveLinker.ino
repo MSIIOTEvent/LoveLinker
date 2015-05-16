@@ -30,6 +30,7 @@ void setup() {
   Serial.begin(115200);             // we agree to talk fast!
   setupBtn(BTN_CHECK_TIME / DELAY_TIME);
   setupLED() ;
+  setupVibrator();
   startAnalyse();
 }
 
@@ -37,6 +38,7 @@ void setup() {
 //  Where the Magic Happens
 void loop() {
   updateLED();
+  updateVibration();
   handleBtnEvent();
   //serialOutput() ;
   delay(DELAY_TIME);                             //  take a break
