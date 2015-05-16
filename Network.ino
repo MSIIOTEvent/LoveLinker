@@ -11,6 +11,10 @@
 IoTkit iotkit;
 char dataBuf[256];
 
+void initializeNetwork() {
+    iotkit.begin();
+}
+
 void sendDataToRemoate(char* compName, int value) {
   iotkit.send(compName, value);   
 }

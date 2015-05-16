@@ -29,6 +29,7 @@ static boolean serialVisual = true;   // Set to 'false' by Default.  Re-set to '
 
 void setup() {
   Serial.begin(115200);             // we agree to talk fast!
+  initializeNetwork();
   setupBtn(BTN_CHECK_TIME / DELAY_TIME);
   setupLED() ;
   setupVibrator();
@@ -43,7 +44,7 @@ void loop() {
   handleBtnEvent();
   TaskDispatcher();
   serialOutput() ;
-  delay(DELAY_TIME);                   //  take a break
+  delay(DELAY_TIME);  //  take a break
 }
 
 void handleBtnEvent() {
