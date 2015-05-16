@@ -22,7 +22,7 @@ const int DARK = 0;
 const int GREEN = 1;
 const int YELLOW = 2;
 const int RED = 3;
-typedef enum EMOTION{NORMAL, LOWEMO,HIGHEMO};
+typedef enum EMOTION{NOUN,NORMAL, LOWEMO,HIGHEMO};
 
 // Regards Serial OutPut  -- Set This Up to your needs
 static boolean serialVisual = true;   // Set to 'false' by Default.  Re-set to 'true' to see Arduino Serial Monitor ASCII Visual Pulse
