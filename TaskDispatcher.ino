@@ -4,14 +4,14 @@ int preEmotion = 0;
 int str = 0;
 int hbFreq = 0;
 int preHbFreq = 0;
-const int TASK_DELAY = 1;
+const int TASK_DELAY = 100; //Update the state after 2 secs
 int taskTime=0;
 
 void TaskDispatcher() {
   taskTime++;
   if(taskTime < TASK_DELAY)
           return;
-   taskTime =0;
+  taskTime =0;
    
   preEmotion = recieveEmotion;
   preHbFreq = hbFreq;
