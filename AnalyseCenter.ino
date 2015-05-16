@@ -62,9 +62,6 @@ switch (result) {
 //send
 int herb1=hbStr*1000+BPM;
 sendDataToRemoate("heartb1", herb1);
-Serial.print("*** AMP Happened *** ");
-Serial.println(BPM);
-
 sendDataToRemoate("emot1", emotion) ;
 }
 
