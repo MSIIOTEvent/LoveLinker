@@ -17,7 +17,7 @@ void TaskDispatcher() {
   preHbFreq = hbFreq;
   recieveEmotion = retriveRemoteData("emot1");
   int hb =  retriveRemoteData("heartb1");
-  if (hb == -1 && recieveEmotion == -1 ) { //data inavailable
+  if (hb == -1 || recieveEmotion == -1 ) { //data inavailable
     return;
   } else if (recieveEmotion == NOUN) {
     if (preEmotion != NOUN)
@@ -34,7 +34,7 @@ void TaskDispatcher() {
   if (hbFreq != preHbFreq) {
 
     int activeTime = str * 60; //ms
-    int inactiveTime = 60 / hbFreq - (activeTime); //ms
+    int inactiveTime = 60000 / hbFreq - (activeTime); //ms
     setBlink(activeTime, inactiveTime , true);
     //control Vibrate
     setVibration(activeTime, inactiveTime, true);
